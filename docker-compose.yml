@@ -1,8 +1,8 @@
 version: "3"
 services:
-  selenium-hub:
+  selenium-hub1:
     image: selenium/hub:3.141.59-20210311
-    container_name: selenium-hub
+    container_name: selenium-hub1
     ports:
       - "4444:4444"
 
@@ -10,18 +10,18 @@ services:
     image: selenium/node-chrome:3.141.59-20210311
     shm_size: '1gb'
     depends_on:
-      - selenium-hub
+      - selenium-hub1
     environment:
-      - HUB_HOST=selenium-hub
+      - HUB_HOST=selenium-hub1
       - HUB_PORT=4444
 
   firefox:
     image: selenium/node-firefox:3.141.59-20210311
     shm_size: '1gb'
     depends_on:
-      - selenium-hub
+      - selenium-hub1
     environment:
-      - HUB_HOST=selenium-hub
+      - HUB_HOST=selenium-hub1
       - HUB_PORT=4444
   search-module:
     image: 608654/selenium-docker
@@ -30,7 +30,7 @@ services:
       - firefox
     environment:
       - BROWSER=firefox
-      - HUB_HOST=selenium-hub
+      - HUB_HOST=selenium-hub1
       - MODULE=search-module.xml
     volumes:
       - ./search-result:/usr/share/udemy/test-output
@@ -41,7 +41,7 @@ services:
       - firefox
     environment:
       - BROWSER=chrome
-      - HUB_HOST=selenium-hub
+      - HUB_HOST=selenium-hub1
       - MODULE=book-flight-module.xml
     volumes:
       - ./book-flight-result:/usr/share/udemy/test-output
